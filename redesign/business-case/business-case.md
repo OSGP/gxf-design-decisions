@@ -1,5 +1,5 @@
 # Business case redesign GXF
-We want to strengthen GXF's position as an opensource IOT data collection platform.
+We want to strengthen GXF's position as an opensource IOT device management and data collection platform.
 This will require us to rethink the way GXF is developed and designed. 
 
 Here, we will describe the new ways we want to work and the reasoning behind it. 
@@ -7,7 +7,7 @@ Here, we will describe the new ways we want to work and the reasoning behind it.
 ---
 ## Core principals of new design
 One of the most important changes to the design is the independent building and releasing of functional modules.
-The current design has large complex components that are hard to test and configure with unclear responsibilities.
+The current design has large components that are hard to test and configure with a large set of responsibilties.
 
 ### Functional modules / services
 The new design works with smaller, functional modules.
@@ -38,7 +38,7 @@ The tests should be identical to the tests than run on the CI server.
 The modules should stay lean. This will allow for rapid development cycles.
 
 ### Continuous delivery
-The services will be automatically built, tested but final deployment will stay manual.
+The services will be automatically built, tested and deployed to acceptance but final production deployment will stay manual.
 This will ensure that we are in control of the release processes.
 
 ---
