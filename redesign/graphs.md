@@ -7,6 +7,8 @@ flowchart TB
     imt[[incoming-message-topic]]
     lvmt[[lv-measurement-topic]]
   
+    mqtt-broker[[mqtt-broker]]
+    mqtt-broker-->mqtt-adapter;
     mqtt-adapter-->imt;
   
     imt-->lv-measurement-processor;
@@ -21,7 +23,7 @@ flowchart TB
     lvm([low-voltage-meter])
   end
 
-  lvm-->mqtt-adapter;
+  lvm-->mqtt-broker;
 
   maki-.->lv-measurement-processor;
 ```
