@@ -27,6 +27,23 @@ GXF is intended for large amounts of IOT devices. We need to ensure that all the
 Using async communication ensures that services keep working when another service is down for maintenance.
 
 
+The services need to be loosely coupled. A change in one should not need to result in an immediate change in another service.
+Data transfer objects can be published by a service in the form of avro schema's so other services can create their own implementation in a language agnostic way.
+Database objects should never be shared between services!! If the same data is needed in another service the data should be published and consumed by the other service.
+
+
+It might be needed in the future to create a new iteration of a service that branches off into its own repository.
+For instance during the pilot phase of a project we create a new service and later create another service with the production code.
+Both should be able to run until the pilot devices are phased out.
+
+
+### Keep it simple, stupid!
+It is important that the new code uses easy to read descriptions and code.
+This can mean using less optimal code if we can keep the code simpler.
+
+Composition over inheritance, The current setup has a lot of inherited classes and code making it hard to understand what a classes responsibilities are.
+Making simple services that have clear input and output will keep the code easier to maintain.
+
 ### Standard tooling
 We want to focus on implementing logic and not implementing infrastructure code.
 This means using standard database connection, metrics endpoints, and authentication logic.
@@ -66,7 +83,7 @@ This means implementing new functionality in the new style and extracting logic 
 
 The team will decide when functionality makes sense to develop in the new style or create a small fix in the old style.
 
-TODO How de we handle communication between old and new setup (SOAP, REST, Kafka)
+TODO How de we handle communication between old and new setup (Kafka, REST, SOAP, ActiveMQ)
 
 ---
 ## Return on Investment
@@ -94,7 +111,7 @@ Time to production will be shorter with faster CI builds and deployment pipeline
 | Item             | Hours | per month | Total Hours |
 |------------------|-------|-----------|-------------|
 | Local build time | 0,25  | 60        | 15          |
-| CI Build Time    | 1,5   | 10        | 150         |
+| CI Build Time    | 1,5   | 10        | 30          |
 | Deployment time  | 0,5   | 4         | 2           |
 
 ### Summary
@@ -114,6 +131,7 @@ The faster development and ease of use should allow us to recover the initial co
 - Choosing the wrong tooling
 - Performance issues
 - Reduced productivity
+- Falling back to old habits
 
 ---
 ## Followup actions
@@ -134,6 +152,6 @@ The faster development and ease of use should allow us to recover the initial co
 |----------------|------------------------|----------------|
 | Maarten Mulder | Product Owner          |                |
 | Robert Tusveld | Solution Architect     |                |
-| GXF Developer  | Developer              |                |
+| GXF Developers | Developer              |                |
 | LF Energy      | Open source Foundation |                |
 | Alliander      | Supplier               |                |
