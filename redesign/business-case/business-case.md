@@ -2,12 +2,16 @@
 We want to strengthen GXF's position as an opensource IOT device management and data collection platform.
 This will require us to rethink the way GXF is developed and designed.
 
-Here, we will describe the new ways we want to work and the reasoning behind it.
+This document will focus on the new way we want to work and how it differs from what we are used to.
+We won't go into specific tooling or frameworks until we are sure we want to go ahead with the project.
+
 
 ---
+
 ## Core principals of new design
 One of the most important changes to the design is the independent building and releasing of functional modules.
 The current design has large components that are hard to test and configure with a large set of responsibilities.
+
 
 ### Functional services
 The new design works with smaller, functional modules.
@@ -22,15 +26,16 @@ It will be up to the different implementors to choose which modules they need fo
 We will still have shared libraries, for example for authentication. But these libraries should not have product
 functionality.
 
+
 ### Scalable
 GXF is intended for large amounts of IOT devices. We need to ensure that all the components perform and are scalable.
 Using async communication ensures that services keep working when another service is down for maintenance.
 
-
 The services need to be loosely coupled. A change in one should not need to result in an immediate change in another service.
-Data transfer objects can be published by a service in the form of avro schema's so other services can create their own implementation in a language agnostic way.
-Database objects should never be shared between services!! If the same data is needed in another service the data should be published and consumed by the other service.
-
+Data transfer objects can be published by a service in the form of avro schema's so other services can create their own
+implementation in a language agnostic way.
+Database objects should never be shared between services!! If the same data is needed in another service the data should
+be published and consumed by the other service.
 
 It might be needed in the future to create a new iteration of a service that branches off into its own repository.
 For instance during the pilot phase of a project we create a new service and later create another service with the production code.
@@ -43,6 +48,7 @@ This can mean using less optimal code if we can keep the code simpler.
 
 Composition over inheritance, The current setup has a lot of inherited classes and code making it hard to understand what a classes responsibilities are.
 Making simple services that have clear input and output will keep the code easier to maintain.
+
 
 ### Standard tooling
 We want to focus on implementing logic and not implementing infrastructure code.
@@ -77,23 +83,27 @@ This will ensure that we are in control of the release processes.
 
 
 ---
+
 ## Transition
+
 The plan is to transition to a new design without stopping development on the current application.
-This means implementing new functionality in the new style and extracting logic from the current application when needed. 
+This means implementing new functionality in the new style and extracting logic from the current application when
+needed.
 
 The team will decide when functionality makes sense to develop in the new style or create a small fix in the old style.
 
 TODO How de we handle communication between old and new setup (Kafka, REST, SOAP, ActiveMQ)
 
 ---
+
 ## Return on Investment
 
 ### Cost
-The main cost will be choosing the new tooling and making an initial application template.
-By extracting more and more functionality from the current components we don't have to invest a lot into recreating
-components.
-If in the end we remain with large chunks of functionality, we need to make a more in depth analysis on redeveloping
-those components.
+The main cost will be choosing the new tooling and making an initial application template. After we have the template we
+can develop new code in a new way and start reaping the rewards.
+
+If the new approach is too our liking we can start looking at the current components and estimate how much it will cost to refactor those.
+The main cost of refactoring the exisiting components is replacing infrastructure code. Logic can be copied to the new services.
 
 | Item                                    | Hours   |
 |-----------------------------------------|---------|
@@ -108,32 +118,36 @@ those components.
 Local development will be faster with lower build times and easier to run tests.
 Time to production will be shorter with faster CI builds and deployment pipelines.
 
-| Item             | Hours | per month | Total Hours |
-|------------------|-------|-----------|-------------|
-| Local build time | 0,25  | 60        | 15          |
-| CI Build Time    | 1,5   | 10        | 30          |
-| Deployment time  | 0,5   | 4         | 2           |
+| Item             | Hours | Times per month | Developers | Total Hours |
+|------------------|-------|-----------------|------------|-------------|
+| Local build time | 0,10  | 60              | 5          | 30          |
+| CI Build Time    | 1,5   | 10              | 5          | 150         |
+| Deployment time  | 0,5   | 4               | 5          | 10          |
 
-### Summary
-The faster development and ease of use should allow us to recover the initial costs within a year.
-
----
-### Intangible Benefits
+#### Intangible Benefits
 
 - More focus on business logic
 - Easier onboarding of developers
 - Easier opensource contribution
 - Developer happiness
 
+### Summary
+
+By gradually migrating the code we should be able to recover costs per module fairly easily.
+The faster development and ease of use should allow us to recover the initial costs within a year.
+
 ---
+
 ## Risks
 
 - Choosing the wrong tooling
 - Performance issues
 - Reduced productivity
 - Falling back to old habits
+- Unnecessary complexity
 
 ---
+
 ## Followup actions
 
 - Select new tooling
@@ -146,6 +160,7 @@ The faster development and ease of use should allow us to recover the initial co
 - Define release strategy
 
 ---
+
 ## Stakeholders
 
 | Stakeholder    | Role                   | Informed level |
