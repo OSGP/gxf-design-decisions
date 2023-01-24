@@ -1,4 +1,4 @@
-# Business case redesign GXF
+# Business case GXF Upgrade
 We want to strengthen GXF's position as an opensource IOT device management and data collection platform.
 This will require us to rethink the way GXF is developed and designed.
 
@@ -6,7 +6,6 @@ This document will focus on the new way we want to work and how it differs from 
 We won't go into specific tooling or frameworks until we are sure we want to go ahead with the project.
 
 
----
 
 ## Core principals of new design
 One of the most important changes to the design is the independent building and releasing of functional modules.
@@ -82,19 +81,25 @@ The services will be automatically built, tested and deployed to acceptance but 
 This will ensure that we are in control of the release processes.
 
 
----
-
 ## Transition
 
 The plan is to transition to a new design without stopping development on the current application.
-This means implementing new functionality in the new style and extracting logic from the current application when
-needed.
+Because we are choosing to go to a modular application we can create new services for new functionality without having to make big changes to the current application.
 
 The team will decide when functionality makes sense to develop in the new style or create a small fix in the old style.
 
-TODO How de we handle communication between old and new setup (Kafka, REST, SOAP, ActiveMQ)
+When a part of the gxf functionality is extracted the data needed from the other components should be posted to Kafka.
+We use Kafka for this because the platform already supports it and the new components don't need to support REST or ActiveMQ.
 
----
+
+
+## Proof of concept
+After we have choosing which language, framework and tooling we want to use we will start with a proof of concept.
+This can be new functionality or extracting a small piece of functionality from the gxf platform.
+
+
+The new application should help us see what tooling is missing and if the learning curve is bigger than anticipated.
+
 
 ## Return on Investment
 
@@ -103,7 +108,7 @@ The main cost will be choosing the new tooling and making an initial application
 can develop new code in a new way and start reaping the rewards.
 
 If the new approach is too our liking we can start looking at the current components and estimate how much it will cost to refactor those.
-The main cost of refactoring the exisiting components is replacing infrastructure code. Logic can be copied to the new services.
+The main cost of refactoring the existing components is replacing infrastructure code. Logic can be copied to the new services.
 
 | Item                                    | Hours   |
 |-----------------------------------------|---------|
@@ -112,7 +117,11 @@ The main cost of refactoring the exisiting components is replacing infrastructur
 | New framework configuration             | 20      |
 | Alliander specific library development  | 40      |
 | Implement bridging mechanic in old code | 20      |
-| **Sum**                                 | **120** |
+| **Sum**                                 | **110** |
+
+After the 110 hours of development we should have a solid base after which there is no big additional 
+cost to developing new functionality compared to developing in the current setup.
+
 
 ### Return
 Local development will be faster with lower build times and easier to run tests.
@@ -136,7 +145,7 @@ Time to production will be shorter with faster CI builds and deployment pipeline
 By gradually migrating the code we should be able to recover costs per module fairly easily.
 The faster development and ease of use should allow us to recover the initial costs within a year.
 
----
+
 
 ## Risks
 
@@ -146,7 +155,7 @@ The faster development and ease of use should allow us to recover the initial co
 - Falling back to old habits
 - Unnecessary complexity
 
----
+
 
 ## Followup actions
 
@@ -159,7 +168,7 @@ The faster development and ease of use should allow us to recover the initial co
 - Create transition plan
 - Define release strategy
 
----
+
 
 ## Stakeholders
 
