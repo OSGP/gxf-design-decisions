@@ -31,10 +31,10 @@ GXF is intended for large amounts of IOT devices. We need to ensure that all the
 Using async communication ensures that services keep working when another service is down for maintenance.
 
 The services need to be loosely coupled. A change in one should not need to result in an immediate change in another service.
-Data transfer objects can be published by a service in the form of avro schema's so other services can create their own
+Data transfer objects (DTO) can be published by a service in the form of avro schema's so other services can create their own
 implementation in a language agnostic way.
-Database objects should never be shared between services!! If the same data is needed in another service the data should
-be published and consumed by the other service.
+Database objects should never be shared between services, use DTO's!! If the same data is needed in another service the data should
+be published by the service responsible for this data and consumed by the other service(s).
 
 It might be needed in the future to create a new iteration of a service that branches off into its own repository.
 For instance during the pilot phase of a project we create a new service and later create another service with the production code.
@@ -55,7 +55,9 @@ This means using standard database connection, metrics endpoints, and authentica
 Possible frameworks we can use are: Spring boot, Quarkus, Micronaut. If we want to go forward with the redesign we have
 to investigate which framework to use.
 
-This will also make it easier to onboard developers and get open source contribution.
+This will also make it easier to onboard developers and get open source contribution. 
+Also, security updates will be handled by the framework maintainers which saves us time. 
+This requires us to prefer the libs included in the framework over 3rd (4th?) party libraries.
 
 
 ### Easy to run
@@ -84,7 +86,8 @@ This will ensure that we are in control of the release processes.
 ## Transition
 
 The plan is to transition to a new design without stopping development on the current application.
-Because we are choosing to go to a modular application we can create new services for new functionality without having to make big changes to the current application.
+Because we are choosing to go to a modular application we can create new services for new functionality 
+without having to make big changes to the current application.
 
 The team will decide when functionality makes sense to develop in the new style or create a small fix in the old style.
 
@@ -139,6 +142,7 @@ Time to production will be shorter with faster CI builds and deployment pipeline
 - Easier onboarding of developers
 - Easier opensource contribution
 - Developer happiness
+- More secure software
 
 ### Summary
 
